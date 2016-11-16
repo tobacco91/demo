@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>22</title>
+    <style>
+    *{
+        margin :0;
+    }
+    .red{
+        width: 100px;
+        height: 100px;
+        background: red;
+        margin: 200px 30px 50px 200px;
+        position: relative;
+        overflow: hidden;
+    }
+    #black{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -100px;
+        background: #ccc;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="red">
+        <div id="black"></div>
+    </div>
+    <script>
+        var tops;
+        var left; 
+        var get_num = function(red,black) {
+            var arr = [];
+            arr[0] = black['y'] - red['top'];
+            arr[1] = red['right'] - black['x'];
+            arr[2] = red['bottom'] -black['y'];
+            arr[3] = black['x'] - red['left'];
+            var minValue = arr[0];
+            var minKey = 0;
+            for(var i = 0; i<arr.length; i++){
+                if(minValue > arr[i+1]) { 
+                    minValue = arr[i+1];
+                    minKey = i+1;
+                }
+            }
+            
+            return minKey;
+        }
+        var direction = function(top,left) {
+            b.style.left = left;
+            b.style.top = top;
+        }
+        var red = document.querySelector('.red');
+        var b = document.querySelector('#black');
+        var getR = [];
+        getR['left'] = red.offsetLeft;
+        getR['right'] = red.offsetLeft + red.offsetWidth;
+        getR['top'] = red.offsetTop;
+        getR['bottom'] = red.offsetTop + red.offsetHeight;
+        var getClass = [];
+        getClass.push('rt','rr','rb','rl');
+        var key;
+        var back = function(e) {
+            var black = [];
+            black['x'] = e.clientX;
+            black['y'] = e.clientY;
+            key = get_num(getR,black);
+            var point = getClass[key];
+            switch(point){
+            case 'rt':
+                direction('-100px','0px');
+                tops = '-100px';
+                left = '0px';
+                break;
+            case 'rb':
+                direction('100px','0px');
+                tops = '100px';
+                left = '0px';
+                break;
+            case 'rl':
+                direction('0px','-100px');
+                tops = '0px';
+                left = '-100px';
+                break;
+            case 'rr':
+                direction('0px','100px');
+                tops = '0px';
+                left = '100px';
+                break;
+
+            }
+            console.log(tops);
+            setTimeout(function() {
+                b.style.transition = 'all 0.5s ease-in';
+                direction(0,0);
+            },0);
+        }
+        red.addEventListener('mouseenter', back);
+        
+            var rollback = function() {
+                direction(tops,left);
+                setTimeout(function() {
+                    b.style.transition = 'all 0s ease-in';
+                },0);
+            }
+            
+               
+            red.addEventListener('mouseleave', rollback, false);
+            
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>url</title>
+</head>
+<body>
+<input type="text" class="txt">
+<button class="but">媳妇儿抱</button>
+<div class="url"></div>
+<script>
+    (function() {
+        var txt = document.querySelector('.txt');
+        var url = document.querySelector('.url');
+        var but = document.querySelector('.but');
+        but.addEventListener('click', function() {
+            var protocol = '(file:///|ftp://|http://|https://|mailto:|mms://|ed2k://| flashget://|thunder://)';
+            var port = '([\\w.].*)(:[\\d].*)??';
+            var path = '(/[\\w%_.-].*).*';
+            var args = '(\?[\\w].*=[\\w].*)??|(\?[\\w].*=[\\w].*)(&[\\w%_].*\?[\\w].*=[\\w].*).*'; 
+            var reg = new RegExp(protocol+port+path);
+            var starts = txt.value.toLocaleLowerCase();
+            var end = reg.exec(starts) ? reg.exec(starts)[0] : null;
+            url.innerHTML = end;
+        })
+    })();
+</script>
+</body>
+</html>

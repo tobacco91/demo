@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+        <style>
+            div,body {
+                margin : 0;
+                padding: 0;
+            }
+           
+        </style>
+    </head>
+<body>
+    <div>
+    <canvas id="drawing" width="500" height="500">canvas</canvas>
+    <canvas id="img">img</canvas>
+    </div>
+</body>
+<script>
+    
+    (function(){
+        const $ = function (element) {
+            if (document.querySelectorAll(element).length === 1) {
+                return document.querySelector(element);
+            } else {
+                return document.querySelectorAll(element);
+            }
+        }
+        const draw = $('#drawing');
+        if (draw.getContext) {
+            //console.log(draw);
+            const context = draw.getContext('2d');
+            context.fillStyle = 'red'; //描边
+            context.fillRect(10,10,50,50);
+            context.globalAlpha = 0.5;
+            context.fillStyle = 'rgba(0,0,255,1)';
+            context.fillRect(30,30,100,50);
+            context.clearRect(40,40,10,10);
+            context.beginPath();
+            context.arc(100,100,99,0,2*Math.PI,false);
+            context.moveTo(194,100);
+            context.arc(100,100,94,0,2*Math.PI,false);
+            context.moveTo(100,100);
+            context.lineTo(35,100);
+            context.moveTo(100,100);
+            context.lineTo(100,15);
+            context.font = 'bold 14px middle';
+            context.textAlign = 'center';//水平居中
+            context.textBaseline = 'middle';//垂直居中
+            context.fillText(12,100,20);
+            context.stroke();
+            context.translate(200,200);
+            //context.moveTo(99,0); or
+            context.beginPath();
+            context.rotate(1);
+            context.arc(0,0,99,0,2*Math.PI,false);
+            context.moveTo(94,0);
+            context.arc(0,0,94,0,2*Math.PI,false);
+            
+            context.moveTo(0,0);
+            context.lineTo(-65,0);
+            context.moveTo(0,0);
+            context.lineTo(0,-85);
+            context.stroke();
+
+            const gradient = context.createRadialGradient(55,55,10,55,55,30);
+            gradient.addColorStop(0,'white');
+            gradient.addColorStop(1,'black');
+            context.fillStyle = gradient;
+            context.fillRect(30,30,50,50);
+            
+        }
+        const img = $('#img');
+        if (img.getContext) {
+            const con = img.getContext('2d');
+            con.drawImage(draw,0,0);
+        }
+    })()
+</script>
+</html>

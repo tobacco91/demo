@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+        <style>
+            div,body {
+                margin : 0;
+                padding: 0;
+            }
+           
+        </style>
+    </head>
+<body>
+    <div>
+    <img id="img" src="./123.jpg">
+    <canvas id="drawing" width="500" height="500">canvas</canvas>
+    </div>
+</body>
+<script>
+     (function(){
+        const $ = function (element) {
+            if (document.querySelectorAll(element).length === 1) {
+                return document.querySelector(element);
+            } else {
+                return document.querySelectorAll(element);
+            }
+        }
+        const draw = $('#drawing');
+         
+        if (draw.getContext) {
+            var context = draw.getContext('2d'),
+                img = document.images[0],
+                imageData,data,i,average,red,green,blue,alpha;
+                context.drawImage(img,0,0);
+                img.onload = function () {
+                    console.log(img.width);
+                    imageData = context.getImageData(0,0,img.width,img.height);
+                    data = imageData.data;
+                    imageData.data = data.map(function(e,i) {
+                        red = data[0];
+                        green = data[1];
+                        blue = data[2];
+                        alpha = data[i+3];
+                        average = Math.floor((red + green + blue) / 3);
+                        data[i] = average;
+                        data[i+1] = average;
+                        data[i+2] = average;
+                    });
+                    console.log(imageData.data.length);
+                    context.putImageData(imageData,0,0);
+                } //妈的智障 那么长的数组怎么循环 
+        }
+     })()
+</script>
+</html>

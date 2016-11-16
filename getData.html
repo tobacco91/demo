@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <div id="a">111</div>
+    </body>
+    <script>
+        window.addEventListener('message', function(event) {
+        document.querySelector('#a').style.bacground = e.data;
+        
+        event.sourse.postMessage('receive','*')
+    })
+    </script>
+</html>

@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <div id="a">111</div>
+        <div>
+            <iframe id="coreIframe" src="./getData.html"></iframe>
+        </div>
+    
+    </body>
+    <script>
+        window.onload=function(){
+            window.frames[0].contentWindow.postMessage('getcolor','./getData.html');
+        }
+        
+    </script>
+</html>

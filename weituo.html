@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>delegate</title>
+</head>
+<body>
+    <div id="one">
+        <div id="two">
+            <button id="three">submit</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    (function() {
+            var addEvent = (function() {
+                if(document.addEventListener) {
+                    return function(ele, type, func, userCaptrue) {
+                        if(userCaptrue === undefined)
+                            userCaptrue = true;
+                        ele.addEventListener(type, func, userCaptrue);
+                    }
+                }
+                if(document.attachEvent) {
+                    return function(ele, type, func,userCaptrue) {
+                        ele.attachEvent('on' + type, func);
+                    }
+                }
+            })();
+        var one = document.querySelector('#one');
+        var two = document.querySelector('#two');
+        var three = document.querySelector('#three');
+        
+        addEvent(one, 'click', function(e) {
+            var e = e || window.event;
+            var target = e.target || e.srcElement;
+            alert(target.id);
+        });
+        
+    })();
+    
+
+</script>
+</html>
